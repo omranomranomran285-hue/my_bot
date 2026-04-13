@@ -1,0 +1,19 @@
+import telebot
+
+TOKEN = "8793630433:AAFTG8m8gx0NHy3lv0kv8m9_x42XAwxHeqs"
+bot = telebot.TeleBot(TOKEN)
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, "هلا بيك 👋 أرسل صورة وأنا راح أستلمها")
+
+@bot.message_handler(content_types=['photo'])
+def handle_photo(message):
+    file_id = message.photo[-1].file_id
+    user_id = message.from_user.id
+
+    bot.reply_to(message, "تم استلام الصورة 👍")
+
+    print(f"User: {user_id} sent photo: {file_id}")
+
+bot.infinity_polling()
